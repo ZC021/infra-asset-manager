@@ -19,7 +19,7 @@ Required actions:
 2. Read `/api/health` and keep `ui_build_id` for the receipt.
 3. Click every mode: `servers`, `assets`, `in_use`, `unused`, `needs_review`,
    `owners`, `locations`, `maintenance`, `changes`, `sources`.
-4. Search `ACME-A02-250379`.
+4. Search `ACME-TEST-0001`.
 5. Open the asset detail.
 6. Confirm the detail contains `통합 인프라 사용 근거`.
 7. Download the CSV export and confirm the header includes `usage_status`.
@@ -37,7 +37,7 @@ The GUI project must send a JSON object like this:
   "base": "http://asset-hub.example.com:8130",
   "checked_at": "2026-04-17T17:10:00+09:00",
   "simulated": false,
-  "operator_device": "acme-a02-250379",
+  "operator_device": "acme-test-0001",
   "observed": {
     "title": "infra-control",
     "ui_build_id": "current value from /api/health",
@@ -53,7 +53,7 @@ The GUI project must send a JSON object like this:
       "changes",
       "sources"
     ],
-    "selected_asset": "ACME-A02-250379",
+    "selected_asset": "ACME-TEST-0001",
     "detail_contains": ["통합 인프라 사용 근거"],
     "csv_header": "asset_tag,usage_status,usage_reason,...",
     "screenshot": "computer-use-gui.png"

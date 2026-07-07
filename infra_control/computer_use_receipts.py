@@ -129,8 +129,8 @@ def validate_receipt(payload: dict[str, Any], expected: str | None = None) -> tu
         errors.append("CLI/headless/playwright receipt is not accepted as GUI Computer Use")
     if missing_modes:
         errors.append("missing clicked modes: " + ", ".join(missing_modes))
-    if observed.get("selected_asset") != "ACME-A02-250379":
-        errors.append("selected_asset must be ACME-A02-250379")
+    if observed.get("selected_asset") != "ACME-TEST-0001":
+        errors.append("selected_asset must be ACME-TEST-0001")
     observed_blob = json.dumps(observed, ensure_ascii=False)
     if not any(evidence in observed_blob for evidence in ACCEPTED_ENDPOINT_USAGE_EVIDENCE):
         errors.append("detail evidence must include NAC/Intune, checkout, or Jira board usage evidence")

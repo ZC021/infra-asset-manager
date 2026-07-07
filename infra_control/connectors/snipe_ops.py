@@ -12,7 +12,7 @@ from infra_control.db import connect, encode_json, init_db
 
 
 ROOT = Path(__file__).resolve().parents[2]
-ROOT_OPS_DIR = Path("/root/snipe-it/frontend-next/var/ops")
+ROOT_OPS_DIR = Path("/srv/snipe-ops/var/ops")
 LOCAL_OPS_DIR = ROOT / "var" / "imports" / "snipe-ops"
 DEFAULT_OPS_DIR = Path(os.environ["INFRA_CONTROL_SNIPE_OPS_DIR"]) if os.environ.get("INFRA_CONTROL_SNIPE_OPS_DIR") else None
 

@@ -5,7 +5,7 @@ ROOT="${INFRA_CONTROL_ROOT:-/opt/infra-asset-manager}"
 SERVICE_USER="${INFRA_CONTROL_SERVICE_USER:-infraasset}"
 SERVICE_GROUP="${INFRA_CONTROL_SERVICE_GROUP:-$SERVICE_USER}"
 SYNC_DIR="${SNIPEIT_SYNC_DIR:-/root/snipe-it/sync}"
-OPS_SRC="${SNIPEIT_OPS_SRC:-/root/snipe-it/frontend-next/var/ops}"
+OPS_SRC="${SNIPEIT_OPS_SRC:-/srv/snipe-ops/var/ops}"
 OPS_DST="${INFRA_CONTROL_SNIPE_OPS_DIR:-${ROOT}/var/imports/snipe-ops}"
 LOG_DIR="${ROOT}/var/log"
 RUN_DIR="${ROOT}/var/run"
@@ -149,12 +149,12 @@ fail() {
 }
 
 if [[ "$SKIP_UPSTREAM" != "1" ]]; then
-  run_step "nac_genian_asset_sync" env \
-    SNIPEIT_ASSET_SOURCE=genian \
-    SNIPEIT_GENIAN_MODE=api \
+  run_step "nac_asset_sync" env \
+    SNIPEIT_ASSET_SOURCE=nac \
+    SNIPEIT_NAC_MODE=api \
     SNIPEIT_EXTERNAL_SOURCE_READ_ONLY=1 \
     SNIPEIT_DELETE_NON_OWNED_BY_LEDGER=0 \
-    "${SYNC_DIR}/sync.sh" --assets || fail "NAC Genian asset sync failed"
+    "${SYNC_DIR}/sync.sh" --assets || fail "NAC asset sync failed"
 
   run_step "intune_nac_recon_orchestrator" "${SYNC_DIR}/run_recon_orchestrator.sh" || fail "Intune/NAC recon orchestrator failed"
 else

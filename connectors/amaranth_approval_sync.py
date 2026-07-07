@@ -498,7 +498,7 @@ def build_config() -> ApprovalConfig:
         lookback_days=max(1, env_int("APPROVAL_LOOKBACK_DAYS", 90)),
         page_size=max(1, env_int("APPROVAL_PAGE_SIZE", 30)),
         portal_public_base_url=normalize_base_url(
-            env_optional("APPROVAL_PORTAL_PUBLIC_BASE_URL", "http://10.0.0.17:8000")
+            env_optional("APPROVAL_PORTAL_PUBLIC_BASE_URL", "http://localhost:8000")
         ),
         request_timeout=max(5, env_int("AMARANTH_REQUEST_TIMEOUT_SECONDS", 30)),
     )

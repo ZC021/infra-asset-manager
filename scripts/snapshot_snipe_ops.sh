@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SRC="${INFRA_CONTROL_SNIPE_OPS_SOURCE:-/root/snipe-it/frontend-next/var/ops}"
+SRC="${INFRA_CONTROL_SNIPE_OPS_SOURCE:-/srv/snipe-ops/var/ops}"
 DEST="${INFRA_CONTROL_SNIPE_OPS_DIR:-/opt/infra-asset-manager/var/imports/snipe-ops}"
 
 mkdir -p "$DEST"

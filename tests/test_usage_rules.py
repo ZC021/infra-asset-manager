@@ -285,7 +285,7 @@ class ComputerUseReceiptRulesTest(unittest.TestCase):
             "operator_device": "test-device",
             "observed": {
                 "clicked_modes": list(computer_use_receipts.REQUIRED_UI_MODES),
-                "selected_asset": "ACME-A02-250379",
+                "selected_asset": "ACME-TEST-0001",
                 "selected_asset_usage_basis": "NAC 사용 근거",
                 "selected_asset_usage_evidence": "NAC 최근 접속 / NAC/운영상태 사용중",
                 "scroll_click_preserved_position": True,
@@ -325,7 +325,7 @@ class ComputerUseReceiptRulesTest(unittest.TestCase):
 
 class AssetGroupRulesTest(unittest.TestCase):
     def test_asset_group_uses_first_two_asset_tag_segments(self) -> None:
-        self.assertEqual(server.asset_group("ACME-A02-250379"), "ACME-A02")
+        self.assertEqual(server.asset_group("ACME-TEST-0001"), "ACME-A02")
         self.assertEqual(server.asset_group("ACME-B03-190010"), "ACME-B03")
         self.assertEqual(server.asset_group("ACME-VA-240018"), "ACME-VA")
 
@@ -391,7 +391,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
     def test_jira_and_endpoint_active_stays_in_use(self) -> None:
         status, usage_status, usage_reason, reconciliation = import_jira_board.reconcile_usage(
             "inprogress",
-            {"asset_tag": "ACME-A02-250379", "category": "노트북", "model": "MacBook"},
+            {"asset_tag": "ACME-TEST-0001", "category": "노트북", "model": "MacBook"},
             {"usage_basis": "NAC 사용 근거", "usage_evidence": ["NAC 최근 접속"]},
             "In Progress(사용중)",
             "사용중",
@@ -412,7 +412,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
                     "key": "ITAM-100",
                     "fields": {
                         "status": {"name": "진행 중"},
-                        "customfield_asset": "ACME-A02-250379",
+                        "customfield_asset": "ACME-TEST-0001",
                         "customfield_owner": {"name": "example.owner"},
                     },
                 },
@@ -432,7 +432,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
         self.assertEqual(
             records,
             [
-                {"asset_tag": "ACME-A02-250379", "lane": "inprogress", "issue": "ITAM-100", "owner": "example.owner", "page": None, "lines": []},
+                {"asset_tag": "ACME-TEST-0001", "lane": "inprogress", "issue": "ITAM-100", "owner": "example.owner", "page": None, "lines": []},
                 {"asset_tag": "ACME-A02-250380", "lane": "stock", "issue": "ITAM-101", "owner": "", "page": None, "lines": []},
             ],
         )
@@ -452,7 +452,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
                     (
                         "asset-1",
                         "snipe-ops",
-                        "ACME-A02-250379",
+                        "ACME-TEST-0001",
                         "노트북",
                         "ThinkPad",
                         "정상",
@@ -469,14 +469,14 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
                 import_jira_board, "connect", lambda: db.connect(db_path)
             ):
                 result = import_jira_board.apply_records(
-                    [{"asset_tag": "ACME-A02-250379", "lane": "stock", "issue": "ITAM-100", "owner": "jira.owner", "page": None, "lines": []}],
+                    [{"asset_tag": "ACME-TEST-0001", "lane": "stock", "issue": "ITAM-100", "owner": "jira.owner", "page": None, "lines": []}],
                     source_file="Jira REST API board 118",
                     source_id="jira-api",
                     source_name="Jira Hardware Asset API",
                     actor="jira-api-sync",
                 )
                 result_again = import_jira_board.apply_records(
-                    [{"asset_tag": "ACME-A02-250379", "lane": "stock", "issue": "ITAM-100", "owner": "jira.owner", "page": None, "lines": []}],
+                    [{"asset_tag": "ACME-TEST-0001", "lane": "stock", "issue": "ITAM-100", "owner": "jira.owner", "page": None, "lines": []}],
                     source_file="Jira REST API board 118",
                     source_id="jira-api",
                     source_name="Jira Hardware Asset API",
@@ -484,7 +484,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
                 )
 
             with db.connect(db_path) as conn:
-                asset = conn.execute("SELECT * FROM assets WHERE asset_tag = ?", ("ACME-A02-250379",)).fetchone()
+                asset = conn.execute("SELECT * FROM assets WHERE asset_tag = ?", ("ACME-TEST-0001",)).fetchone()
                 source = conn.execute("SELECT * FROM integration_sources WHERE id = ?", ("jira-api",)).fetchone()
                 history_count = conn.execute("SELECT COUNT(*) FROM change_history WHERE source = ?", ("jira-api",)).fetchone()[0]
 
@@ -522,7 +522,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
                     (
                         "asset-1",
                         "snipe-ops",
-                        "ACME-A02-250379",
+                        "ACME-TEST-0001",
                         "노트북",
                         "ThinkPad",
                         "정상",
@@ -540,7 +540,7 @@ class JiraBoardMetadataRulesTest(unittest.TestCase):
             ):
                 result = import_jira_board.apply_records(
                     [
-                        {"asset_tag": "ACME-A02-250379", "lane": "stock", "issue": "ITAM-100", "owner": "", "page": None, "lines": []},
+                        {"asset_tag": "ACME-TEST-0001", "lane": "stock", "issue": "ITAM-100", "owner": "", "page": None, "lines": []},
                         {"asset_tag": "ACME-A02-250477", "lane": "inprogress", "issue": "ITAM-981", "owner": "owner.user", "page": None, "lines": []},
                     ],
                     source_file="Jira REST API board 118",
@@ -1046,7 +1046,7 @@ class DashboardCompletionRulesTest(unittest.TestCase):
                     (id, source, asset_tag, usage_status, usage_reason, metadata_json, updated_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                     """,
-                    ("asset-1", "snipe-ops", "ACME-A02-250379", "사용중", "NAC+Intune 사용 근거", "{}", "2026-05-12T00:00:00+00:00"),
+                    ("asset-1", "snipe-ops", "ACME-TEST-0001", "사용중", "NAC+Intune 사용 근거", "{}", "2026-05-12T00:00:00+00:00"),
                 )
                 conn.execute(
                     """
@@ -1100,7 +1100,7 @@ class DashboardCompletionRulesTest(unittest.TestCase):
                 result = server.summary()
 
         by_tag = {row["asset_tag"]: row for row in rows}
-        self.assertIn("ACME-A02-250379", by_tag)
+        self.assertIn("ACME-TEST-0001", by_tag)
         self.assertIn("ACME-A02-250477", by_tag)
         self.assertNotIn("ACME-A02-250478", by_tag)
         self.assertEqual(filtered[0]["asset_tag"], "ACME-A02-250477")

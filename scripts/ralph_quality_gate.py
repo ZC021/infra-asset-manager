@@ -24,7 +24,7 @@ from server import asset_group
 
 RECEIPT = ROOT / "var" / "receipts" / "ralph-quality-gate.json"
 SECURITY_ENV = ROOT / "config" / "security.env"
-AUTH_ALLOWED_HOSTS = {"127.0.0.1", "localhost", "::1", "10.0.0.17"}
+AUTH_ALLOWED_HOSTS = {"127.0.0.1", "localhost", "::1"}
 SECRET_TERMS = ("password", "passwd", "비밀번호", "token", "secret", "마스터 계정")
 REQUIRED_UI_MODES = (
     "assets",

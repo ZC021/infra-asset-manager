@@ -26,7 +26,7 @@ from import_jira_board import apply_records
 
 KST = timezone(timedelta(hours=9), "KST")
 KST_ZONE_NAME = "Asia/Seoul"
-DEFAULT_ENV_FILE = Path("/etc/internal-jira-mcp/env")
+DEFAULT_ENV_FILE = Path("/etc/jira-sync/env")
 DEFAULT_BOARD_ID = "118"
 
 

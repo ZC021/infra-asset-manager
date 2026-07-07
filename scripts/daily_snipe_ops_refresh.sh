@@ -8,7 +8,7 @@ LOG="${ROOT}/var/receipts/daily-snipe-ops-refresh.log"
 IMPORT_FILE="${ROOT}/var/receipts/daily-snipe-ops-refresh-import.json"
 HEALTH_FILE="${ROOT}/var/receipts/daily-snipe-ops-refresh-health.json"
 JIRA_SYNC="${INFRA_CONTROL_JIRA_SYNC:-1}"
-JIRA_ENV_FILE="${INFRA_CONTROL_JIRA_ENV_FILE:-/etc/internal-jira-mcp/env}"
+JIRA_ENV_FILE="${INFRA_CONTROL_JIRA_ENV_FILE:-/etc/jira-sync/env}"
 JIRA_RECEIPT="${ROOT}/var/receipts/jira-api-sync.json"
 
 now_kst() {

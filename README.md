@@ -52,3 +52,9 @@ DB, CSV, Excel, receipt, and cache files out of git.
 
 Screenshots are intentionally omitted from this sanitized export. Add public,
 synthetic screenshots here after loading non-company sample data.
+
+## Sanitization / 공개 범위
+
+사내 프로젝트를 공개용으로 정리(비식별화)한 저장소입니다. 회사명·내부 데이터·운영 환경 정보(호스트명·내부 주소·계정)는 포함하지 않으며, 예시 데이터는 전부 합성(synthetic)입니다. 세부 구현과 운영 경험은 면접에서 상세히 설명할 수 있습니다.
+
+This is a sanitized public export of an internal project. It contains no company names, internal data, or production environment details (hostnames, internal addresses, accounts); all sample data is synthetic.

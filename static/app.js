@@ -1938,13 +1938,13 @@ function emptyForMode() {
     return `<div class="empty empty-feature"><strong>소프트웨어 만료일 대상이 없습니다.</strong><span>Amaranth 승인 상세에서 사용기한이 확인되는 소프트웨어/구독 신청이 여기에 표시됩니다.</span></div>`;
   }
   if (state.mode === "software_inventory") {
-    return `<div class="empty empty-feature"><strong>소프트웨어 요약 데이터가 아직 없습니다.</strong><span>10.0.0.19 Sweeper 스냅샷이 들어오면 SW 요약에 표시됩니다.</span></div>`;
+    return `<div class="empty empty-feature"><strong>소프트웨어 요약 데이터가 아직 없습니다.</strong><span>Sweeper 스냅샷이 들어오면 SW 요약에 표시됩니다.</span></div>`;
   }
   if (state.mode === "software_installs") {
-    return `<div class="empty empty-feature"><strong>전체 설치 현황 데이터가 아직 없습니다.</strong><span>10.0.0.19 Sweeper 설치 스냅샷이 들어오면 SW 전체설치에 표시됩니다.</span></div>`;
+    return `<div class="empty empty-feature"><strong>전체 설치 현황 데이터가 아직 없습니다.</strong><span>Sweeper 설치 스냅샷이 들어오면 SW 전체설치에 표시됩니다.</span></div>`;
   }
   if (state.mode === "software_users") {
-    return `<div class="empty empty-feature"><strong>소프트웨어 사용현황 데이터가 아직 없습니다.</strong><span>10.0.0.19 Sweeper 설치 스냅샷이 들어오면 SW 사용현황에 표시됩니다.</span></div>`;
+    return `<div class="empty empty-feature"><strong>소프트웨어 사용현황 데이터가 아직 없습니다.</strong><span>Sweeper 설치 스냅샷이 들어오면 SW 사용현황에 표시됩니다.</span></div>`;
   }
   return `<div class="empty">데이터 없음</div>`;
 }

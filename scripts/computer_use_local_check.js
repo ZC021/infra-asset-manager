@@ -73,20 +73,20 @@ async function main() {
     await page.waitForSelector("#content table", { timeout: 10000 });
     await page.fill("#search", "");
     await page.waitForTimeout(150);
-    await page.fill("#search", "ACME-A02-250379");
+    await page.fill("#search", "ACME-TEST-0001");
     await page.waitForFunction(() => {
       const content = document.querySelector("#content")?.innerText || "";
-      return content.includes("ACME-A02-250379") && content.includes("사용중");
+      return content.includes("ACME-TEST-0001") && content.includes("사용중");
     });
     const searchText = await page.locator("#content").innerText({ timeout: 10000 });
     observed.search_result = searchText.slice(0, 1000);
-    if (!searchText.includes("ACME-A02-250379") || !searchText.includes("사용중")) {
-      throw new Error("ACME-A02-250379 search did not show in-use asset");
+    if (!searchText.includes("ACME-TEST-0001") || !searchText.includes("사용중")) {
+      throw new Error("ACME-TEST-0001 search did not show in-use asset");
     }
 
-    await page.locator('[data-asset="ACME-A02-250379"]').first().click();
+    await page.locator('[data-asset="ACME-TEST-0001"]').first().click();
     await page.waitForSelector("#detail h2", { timeout: 10000 });
-    observed.selected_asset = "ACME-A02-250379";
+    observed.selected_asset = "ACME-TEST-0001";
     observed.detail_heading = await visibleText(page.locator("#detail h2"));
     const detailText = await page.locator("#detail").innerText();
     if (!detailText.includes("통합 인프라 사용 근거")) {
