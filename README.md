@@ -1,39 +1,29 @@
-# Infra Asset Manager
+# 인프라 자산 관리 및 운영 자동화
 
-Infra Asset Manager is a lightweight internal IT inventory hub for tracking
-hardware assets, software licenses, SaaS subscriptions, audit findings, and
-reconciliation status across several read-only source systems.
+서버, VM, 소프트웨어 라이선스, SaaS 사용 현황처럼 여러 파일과 운영 도구에 흩어져 있던 정보를 한 화면에서 확인하기 위해 만든 내부 운영용 웹앱입니다.
 
-This public export contains code only. Company data, local databases, CSV/Excel
-imports, deployment receipts, caches, backups, and environment files are not
-included.
+반복적으로 Excel 대장과 운영 스냅샷을 대조하던 일을 줄이고, 담당자 확인, 누락 자산 확인, 점검 결과 조회를 조금 더 안정적으로 만들기 위해 구현했습니다.
 
-## What It Does
+## 구현 범위
 
-- Reconciles asset inventory from local spreadsheets and upstream ops snapshots.
-- Tracks usage status, owners, missing assets, duplicate records, and audit views.
-- Imports software license and SaaS ledger data for compliance checks.
-- Serves a static browser UI plus JSON API endpoints for search, detail views,
-  source health, approval context, and audit summaries.
+- Python 표준 라이브러리 기반 HTTP 서버와 SQLite 저장소 구성
+- 정적 HTML/CSS/JavaScript 화면에서 자산 검색, 상세 조회, 점검 결과 확인
+- 운영 스냅샷, 승인 정보, 소프트웨어 라이선스 데이터를 가져오는 스크립트 작성
+- 합성 데이터 기준 테스트와 품질 확인 스크립트 작성
+- 공개용 저장소로 정리하면서 내부 이름, 호스트명, 계정, 실제 데이터 제거
 
-## Architecture
+## 폴더별 설명
 
-- `server.py`: stdlib `ThreadingHTTPServer` application and JSON API router.
-- `static/`: single-page browser UI.
-- `infra_control/db.py`: SQLite schema, migrations, and connection helpers.
-- `infra_control/connectors/`: importers for asset spreadsheets, ops snapshots,
-  and software license ledgers.
-- `scripts/`: operational import, sync, health-check, and quality-gate helpers.
-- `tests/`: unit tests using synthetic ACME/example fixture data.
+- `server.py`: API 라우팅과 정적 파일 서빙을 담당하는 Python 서버입니다.
+- `static/`: 브라우저에서 보는 자산 관리 화면입니다.
+- `infra_control/`: SQLite 연결, 스키마, 공통 처리 로직을 둔 애플리케이션 코드입니다.
+- `connectors/`: 외부 승인/대장 데이터를 읽어오는 보조 커넥터입니다.
+- `scripts/`: 데이터 가져오기, 상태 점검, 품질 확인, 운영 스냅샷 생성에 쓰는 실행 스크립트입니다.
+- `docs/`: 자동화 흐름과 운영 인수인계용 설명 문서입니다.
+- `tests/`: 합성 데이터로 주요 동작을 검증하는 테스트입니다.
+- `pytest.ini`: 테스트 실행 설정입니다.
 
-## Stack
-
-- Python 3.11+
-- SQLite
-- HTML/CSS/JavaScript frontend
-- Optional import dependencies such as `openpyxl` for Excel ingestion
-
-## Setup
+## 실행 방법
 
 ```bash
 python3 -m venv .venv
@@ -42,19 +32,18 @@ python3 -m pip install openpyxl pytest
 INFRA_CONTROL_ALLOW_NO_AUTH=1 python3 server.py --host 127.0.0.1 --port 8000
 ```
 
-For authenticated local use, set Basic auth credentials via environment
-variables or a private `config/security.env` file. Do not commit that file.
+인증을 켜서 사용할 때는 Basic auth 값을 환경 변수나 개인용 설정 파일에 둡니다. `config/security.env` 같은 인증 파일은 커밋하지 않습니다.
 
-Import data into `var/` using the scripts under `scripts/`; keep all generated
-DB, CSV, Excel, receipt, and cache files out of git.
+## 검증 방법
 
-## Screenshots
+```bash
+python3 -m pytest
+```
 
-Screenshots are intentionally omitted from this sanitized export. Add public,
-synthetic screenshots here after loading non-company sample data.
+운영 데이터가 필요한 스크립트는 공개 저장소에서 바로 실행되지 않을 수 있습니다. 공개 저장소에서는 합성 데이터와 코드 구조를 확인하는 용도로 봐 주세요.
 
-## Sanitization / 공개 범위
+## 공개 범위
 
-사내 프로젝트를 공개용으로 정리(비식별화)한 저장소입니다. 회사명·내부 데이터·운영 환경 정보(호스트명·내부 주소·계정)는 포함하지 않으며, 예시 데이터는 전부 합성(synthetic)입니다. 세부 구현과 운영 경험은 면접에서 상세히 설명할 수 있습니다.
+사내 프로젝트를 포트폴리오용으로 비식별화한 저장소입니다. 회사명, 내부 데이터, 운영 호스트명, 내부 주소, 계정 정보는 포함하지 않았고 예시 데이터는 합성 데이터만 사용합니다.
 
-This is a sanitized public export of an internal project. It contains no company names, internal data, or production environment details (hostnames, internal addresses, accounts); all sample data is synthetic.
+2년차 주니어 수준에서 직접 설명할 수 있도록, 거창한 플랫폼 표현보다 실제로 구현한 자동화와 운영 개선 지점을 중심으로 정리했습니다.
