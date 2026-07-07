@@ -1,0 +1,2 @@
+"""Read-only connector implementations."""
+
